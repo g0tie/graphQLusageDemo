@@ -19,4 +19,4 @@ const response = await fetch(
   return json.data;
 }
  
-module.export = getData;
+module.exports = getData;

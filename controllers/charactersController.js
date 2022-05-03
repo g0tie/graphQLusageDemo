@@ -1,28 +1,79 @@
+const getData = require("../common")
 
-
-function getCharacter(name) 
+function getCharacter(id) 
 {
-
-const data = JSON.stringify({
-    query: `{
-      character(name:${name}) {
-        name
-      }
-    }`,
-});
+    const data = JSON.stringify({
+        query: `{
+            character (id: ${id}){
+            name,
+                status,
+            gender,
+            species,
+            }
+        }
+        `
+    });
+    
+    getData(data);
 }
 
-function getCharacterLists() 
+function getCharacterList() 
 {
-
+    const data = JSON.stringify({
+        query: `{
+            characters {
+              results {
+                  id,
+                name,
+                status
+                gender,
+                species, 
+              }
+            }
+          }`
+    });
+   
+    getData(data);
 }
 
-function getEpisodesList()
+function getLocationsList()
  {
-
+    const data = JSON.stringify({
+        query: `{
+            locations {
+            results {
+                id,
+              name,
+              type,
+              dimension
+            }
+          }
+        }`        
+    });
+   
+    getData(data);
 }
 
-function getEpisodeDetails()
+function getLocationDetails(id)
 {
+    const data = JSON.stringify({
+        query: `{{
+            location (id: ${id}){
+                name,
+                residents {
+                name,
+                species
+                }
+            }
+            }`        
+    });
+   
+    getData(data);
+}
 
+module.exports = {
+    getCharacter,
+    getCharacterList,
+    getLocationDetails,
+    getLocationsList
 }
