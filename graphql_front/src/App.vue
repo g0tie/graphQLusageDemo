@@ -10,10 +10,6 @@ import Header from './components/header.vue'
 import Footer from './components/footer.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-// const routes = [
-//   {path: "/locations", component:}
-// ]
-
 export default {
   name: 'App',
   components: {
