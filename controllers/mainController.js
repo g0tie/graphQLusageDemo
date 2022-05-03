@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const getData = require("../common")
 
 function getCharacter(id) 
@@ -14,7 +15,15 @@ function getCharacter(id)
         `
     });
     
-    getData(data);
+    data = getData(data);
+
+    if (!data.status !== 200) {
+        res.status(data.status).send({message: "Error, could'nt get data"});
+        return;
+    }
+
+    res.status(data.status).send({data});
+    return;
 }
 
 function getCharacterList() 
@@ -33,7 +42,15 @@ function getCharacterList()
           }`
     });
    
-    getData(data);
+    data = getData(data);
+
+    if (!data.status !== 200) {
+        res.status(data.status).send({message: "Error, could'nt get data"});
+        return;
+    }
+
+    res.status(data.status).send({data});
+    return;
 }
 
 function getLocationsList()
@@ -51,7 +68,15 @@ function getLocationsList()
         }`        
     });
    
-    getData(data);
+    data = getData(data);
+
+    if (!data.status !== 200) {
+        res.status(data.status).send({message: "Error, could'nt get data"});
+        return;
+    }
+
+    res.status(data.status).send({data});
+    return;
 }
 
 function getLocationDetails(id)
@@ -68,7 +93,15 @@ function getLocationDetails(id)
             }`        
     });
    
-    getData(data);
+    data = getData(data);
+
+    if (!data.status !== 200) {
+        res.status(data.status).send({message: "Error, could'nt get data"});
+        return;
+    }
+
+    res.status(data.status).send({data});
+    return;
 }
 
 module.exports = {

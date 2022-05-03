@@ -16,7 +16,10 @@ const response = await fetch(
   );
 
   const json = await response.json();
-  return json.data;
+  return {
+    status: response.status,
+    data:json.data
+  };
 }
  
 module.exports = getData;
