@@ -6,7 +6,7 @@
         </div>
 
         <div class="row">
-            <div class="col-10">
+            <div class="col-lg-8">
                 <div class="spinner-border" role="status" v-if="loading">
                     <span class="sr-only"></span>
                 </div>
@@ -16,29 +16,25 @@
                     </li>
                 </ul>
             </div>
-        </div>
 
+            <div class="col-lg-4">
+                <div class="card">
+                    <img class="card-img-top" v-bind:src="modalImg" :alt="altTxt" style="max-height:350px;object-fit:cover;">
+                    
+                    <div class="card-body">
 
-        <div class="modal" tabindex="-1" role="dialog" v-if="open">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">{{modalTitle}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>{{ modalDesc }}</p>
-            </div>
-          
+                        <div class="spinner-border" role="status" v-if="cardLoading">
+                            <span class="sr-only"></span>
+                        </div>
+                        <h5 class="card-title">{{modalTitle}}</h5>
+                        <div v-html="modalDesc"></div>
+                    </div>
+                </div>
             </div>
         </div>
-        </div>
-        </div>
 
 
-    
+    </div>
 </template>
 
 <script>
@@ -48,11 +44,14 @@ export default {
         return {
             list: [],
             loading:false,
-            open:false,
-            title: "",
+            cardLoading:false,
+            modalDisplay:"none",
+            title: "Title",
             type: "",
             modalTitle:"",
-            modalDesc:"",
+            modalDesc:"Description",
+            modalImg:"",
+            altTxt:"No pictures",
             baseurl: "http://localhost:3000/"
         }
     },
@@ -88,29 +87,30 @@ export default {
             this.loading = false;
         },
         loadModal: async function (id) {
-            this.open = true;
+            this.cardLoading = true;
 
             let data = await fetch(this.baseurl + this.type + '/' + id, {mode: 'cors'});
-
             if (await data.status !== 200) return;
 
             data = await data.json();
 
-
              switch (this.type) {
                 case "locations":
-                    data  = data.data.location;
-                    this.modalTitle = await data.name
-                    this.modalDesc = `<span>type: ${data.type}</span><</br><span>dimension:${data.dimension}</span>`
+                    data  = data.data.data.location;
+                    this.modalTitle = data.name
+                    this.modalDesc = `<span>type: ${data.type}</span></br><span>dimension:${data.dimension}</span>`
 
                 break; 
 
                 case "characters":
-                    data = data.data.character
-                    this.modalTitle = await data.name
-                    this.modalDesc = `<span>status: ${data.status}</span><</br><span>gender:${data.gender}</span></br><span>species:${data.species}</span>`
+                    data = data.data.data.character
+                    this.modalTitle = data.name
+                    this.modalDesc = `<span>status: ${data.status}</span></br><span>gender:${data.gender}</span></br><span>species:${data.species}</span>`
+                    this.modalImg = data.image
                 break;
             }
+
+            this.cardLoading = false;
 
         }
         

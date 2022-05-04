@@ -7,7 +7,8 @@ async function getCharacter(req, res)
         query: `{
             character (id: ${req.params.id}){
             name,
-                status,
+            status,
+            image,
             gender,
             species,
             }
