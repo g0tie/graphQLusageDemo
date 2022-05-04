@@ -20,7 +20,7 @@ export default {
             list: [],
             title: "",
             type: "",
-            baseurl: "localhost:3000"
+            baseurl: "http://localhost:3000/"
         }
     },
     methods: {
@@ -32,26 +32,31 @@ export default {
                 this.title = "Locations"
             }
         },
-        getList : function() {
+        getData: async function (url) {
+            let data = await fetch(url);
+
+            if (data.status !== 200) return;
+
+            data = data.data;
+
             switch (this.type) {
                 case "locations":
-                    this.getData(this.baseurl + "/locations")
+                    this.list = data.locations.results
                 break; 
 
                 case "characters":
-                    this.getData(this.baseurl + "/characters")
+                    this.list = data.characters.results
                 break;
             }
-        },
-        getData: async function (url) {
-            this.list = await fetch(url);
+
+            console.log(this.list)
         },
         
     },
     created() {
         this.type = window.location.pathname.replaceAll("/", '');
         this.setTitle();
-        this.getList();
+        this.getData(this.baseurl + this.type);
     }
 }
 </script>

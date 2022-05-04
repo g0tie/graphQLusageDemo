@@ -1,11 +1,11 @@
 const res = require("express/lib/response");
 const getData = require("../common")
 
-function getCharacter(id) 
+async function getCharacter(req, res) 
 {
-    const data = JSON.stringify({
+    let data = JSON.stringify({
         query: `{
-            character (id: ${id}){
+            character (id: ${req.params.id}){
             name,
                 status,
             gender,
@@ -15,9 +15,9 @@ function getCharacter(id)
         `
     });
     
-    data = getData(data);
+    data = await getData(data);
 
-    if (!data.status !== 200) {
+    if (data.status !== 200) {
         res.status(data.status).send({message: "Error, could'nt get data"});
         return;
     }
@@ -26,9 +26,9 @@ function getCharacter(id)
     return;
 }
 
-function getCharacterList() 
+async function getCharacterList(req, res) 
 {
-    const data = JSON.stringify({
+    let data = JSON.stringify({
         query: `{
             characters {
               results {
@@ -42,9 +42,9 @@ function getCharacterList()
           }`
     });
    
-    data = getData(data);
+    data = await getData(data);
 
-    if (!data.status !== 200) {
+    if (data.status !== 200) {
         res.status(data.status).send({message: "Error, could'nt get data"});
         return;
     }
@@ -53,9 +53,9 @@ function getCharacterList()
     return;
 }
 
-function getLocationsList()
+async function getLocationsList(req, res)
  {
-    const data = JSON.stringify({
+    let data = JSON.stringify({
         query: `{
             locations {
             results {
@@ -68,9 +68,9 @@ function getLocationsList()
         }`        
     });
    
-    data = getData(data);
+    data = await getData(data);
 
-    if (!data.status !== 200) {
+    if (data.status !== 200) {
         res.status(data.status).send({message: "Error, could'nt get data"});
         return;
     }
@@ -79,11 +79,11 @@ function getLocationsList()
     return;
 }
 
-function getLocationDetails(id)
+async function getLocationDetails(req, res)
 {
-    const data = JSON.stringify({
+    let data = JSON.stringify({
         query: `{{
-            location (id: ${id}){
+            location (id: ${req.params.id}){
                 name,
                 residents {
                 name,
@@ -93,9 +93,9 @@ function getLocationDetails(id)
             }`        
     });
    
-    data = getData(data);
+    data = await getData(data);
 
-    if (!data.status !== 200) {
+    if (data.status !== 200) {
         res.status(data.status).send({message: "Error, could'nt get data"});
         return;
     }

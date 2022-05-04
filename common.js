@@ -1,5 +1,4 @@
-const https = require('https');
-
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 async function getData(graphqlString) {
 
 const response = await fetch(
