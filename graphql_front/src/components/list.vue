@@ -1,11 +1,14 @@
 <template>
     <div class="container">
         <h1>{{ title }}</h1>
-        <ul class="list-group">
-            <li v-for="item in list" :key="item.id" class="list-group-item">
-                <router-link to="/{{ type }}/{{ item.id }}"><img src={{ item.image }}/> <span>{{item.name}}</span></router-link>
-            </li>
-        </ul>
+
+        <div class="row">
+            <ul class="list-group">
+                <li v-for="item in list" :key="item.id" class="list-group-item">
+                    <a><img v-bind:src="item.image"/> <span>{{item.name}}</span></a>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -14,7 +17,7 @@ export default {
     name:"ListComponent",
     data : function () {
         return {
-            list: "",
+            list: [],
             title: "",
             type: "",
             baseurl: "localhost:3000"
@@ -22,7 +25,8 @@ export default {
     },
     methods: {
         setTitle: function () {
-            if (this.type !== "location") {
+            console.log(this.type)
+            if (this.type !== "locations") {
                 this.title = "Characters"
             } else {
                 this.title = "Locations"
@@ -43,9 +47,11 @@ export default {
             this.list = await fetch(url);
         },
         
-        created() {
-            this.type = this.$router.currentRoute.path.replace("/", "");
-        }
+    },
+    created() {
+        this.type = window.location.pathname.replaceAll("/", '');
+        this.setTitle();
+        this.getList();
     }
 }
 </script>
