@@ -5,10 +5,10 @@ const controller = require("../controllers/mainController")
 /* GET home page. */
 router.get('/characters', controller.getCharacterList);
 
-router.get('/character/:id', controller.getCharacter);
+router.get('/characters/:id', controller.getCharacter);
 
 router.get('/locations', controller.getLocationsList);
 
-router.get('/location/:id', controller.getLocationDetails);
+router.get('/locations/:id', controller.getLocationDetails);
 
 module.exports = router;

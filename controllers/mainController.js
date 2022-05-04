@@ -82,15 +82,13 @@ async function getLocationsList(req, res)
 async function getLocationDetails(req, res)
 {
     let data = JSON.stringify({
-        query: `{{
+        query: `{
             location (id: ${req.params.id}){
                 name,
-                residents {
-                name,
-                species
-                }
+                type,
+                dimension
             }
-            }`        
+        }`        
     });
    
     data = await getData(data);
