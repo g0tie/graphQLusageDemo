@@ -1,13 +1,18 @@
 <template>
-    <div class="container">
-        <h1>{{ title }}</h1>
+    <div class="container-fluid">
 
         <div class="row">
-            <ul class="list-group">
-                <li v-for="item in list" :key="item.id" class="list-group-item">
-                    <a><img v-bind:src="item.image"/> <span>{{item.name}}</span></a>
-                </li>
-            </ul>
+            <h1>{{ title }}</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-10">
+                <ul class="list-group">
+                    <li v-for="item in list" :key="item.id" class="list-group-item">
+                        <a><img v-bind:src="item.image"/> <span>{{item.name}}</span></a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
@@ -33,19 +38,21 @@ export default {
             }
         },
         getData: async function (url) {
-            let data = await fetch(url);
+            let data = await fetch(url, {mode: 'cors'});
 
-            if (data.status !== 200) return;
+            if (await data.status !== 200) return;
 
-            data = data.data;
+            data = await data.json()
+
+            data = await data.data
 
             switch (this.type) {
                 case "locations":
-                    this.list = data.locations.results
+                    this.list = await data.data.locations.results
                 break; 
 
                 case "characters":
-                    this.list = data.characters.results
+                    this.list = await data.data.characters.results
                 break;
             }
 
