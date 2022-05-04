@@ -6,8 +6,8 @@
       </a>
 
       <ul class="nav nav-pills">
-        <li class="nav-item"><a href="/characters" class="nav-link">Characters</a></li>
-        <li class="nav-item"><a href="/locations"  class="nav-link">Locations</a></li>
+        <li class="nav-item"><a href="/characters/" class="nav-link">Characters</a></li>
+        <li class="nav-item"><a href="/locations/"  class="nav-link">Locations</a></li>
         <li class="nav-item"><a href="/about"  class="nav-link">About</a></li>
       </ul>
     </header>
