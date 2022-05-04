@@ -7,6 +7,9 @@
 
         <div class="row">
             <div class="col-10">
+                <div class="spinner-border" role="status" v-if="loading">
+                    <span class="sr-only"></span>
+                </div>
                 <ul class="list-group">
                     <li v-for="item in list" :key="item.id" class="list-group-item">
                         <a><img v-bind:src="item.image"/> <span>{{item.name}}</span></a>
@@ -23,6 +26,7 @@ export default {
     data : function () {
         return {
             list: [],
+            loading:false,
             title: "",
             type: "",
             baseurl: "http://localhost:3000/"
@@ -38,6 +42,7 @@ export default {
             }
         },
         getData: async function (url) {
+            this.loading = true;
             let data = await fetch(url, {mode: 'cors'});
 
             if (await data.status !== 200) return;
@@ -56,7 +61,7 @@ export default {
                 break;
             }
 
-            console.log(this.list)
+            this.loading = false;
         },
         
     },
